@@ -8,7 +8,7 @@ This project template builds on the deployment principles described in `python_a
 2. Make desired changes to application
 3. Push to new remote branch (`git push -u origin <local-branch-name>`). A new PR can be opened.
 4. The `test.yml` workflow will then execute via GitHub actions (the trigger is a push to any branch apart from `main`). It will install python, install the dependencies and run `pytest` via a virtual Ubuntu machine.
-5. If the tests pass, the PR can be approved and merged. A second worflow (`build.yml`) will trigger when it detects a merged PR. This workflow builds the docker image, pushes to AWS ECR, deploys to the AWS EKS Kube Cluster and sets up a cronjob. Ensure that the cluster is already set up by following the steps in  the `python_app_to_k8s` project. 
+5. If the tests pass, the PR can be approved and merged. A second workflow (`build.yml`) will trigger when it detects a merged PR. This workflow builds the docker image, pushes to AWS ECR, deploys to the AWS EKS Kube Cluster and sets up a cronjob. Ensure that the cluster is already set up by following the steps in  the `python_app_to_k8s` project. 
 
 # User Configuration
 
@@ -29,5 +29,7 @@ https://benoitboure.com/securely-access-your-aws-resources-from-github-actions
     role-to-assume: <YOUR_IAM_ARN> # e.g. arn:aws:iam::12345678900:role/github-actions-role
     aws-region: <YOUR_AWS_REGION>
 ```
+5. Create a Kubernetes cluster using EKS by following the steps in `python_app_to_k8s`. A config file for this cluster should then be created on your local machine at `$HOME/.kube/config`.
 
+6. Convert this config file to BASE64 by using 'cat $HOME/.kube/config | base64' 
 
