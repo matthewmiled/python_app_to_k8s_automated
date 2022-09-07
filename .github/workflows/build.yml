@@ -51,4 +51,13 @@ jobs:
     
     - run: aws-iam-authenticator version
        
-    - run: aws eks update-kubeconfig --name test-cluser --region us-west-2
+    - name: Deploy
+      uses: safe2008/eks-actions@v0.0.4
+      env:
+        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws_region: us-west-2
+        cluster_name: test-cluster
+      with:
+        args: |
+          kubectl get pods
