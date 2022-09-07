@@ -42,7 +42,7 @@ jobs:
         docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO_NAME:latest
      
     - name: Install kubectl
-    - uses: tale/kubectl-action@v1
+      uses: tale/kubectl-action@v1
       with:
         base64-kube-config: ${{ secrets.KUBECONFIG }}
     - run: kubectl get pod
