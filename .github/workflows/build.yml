@@ -7,6 +7,12 @@ on:
 
 jobs:
 
+  env:
+    DOCKER_IMAGE_NAME: docker-test
+    AWS_REGION: us-east-2
+    AWS_ACCOUNT_ID: 707768507475
+    ECR_REPO_NAME: eks-demo
+
   if-merged:
     if: github.event.pull_request.merged == true
 
@@ -15,4 +21,10 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build -t docker-test .
+      run: docker build -t $DOCKER_IMAGE_NAME .
+
+    - name: Push Docker image to ECR
+      run: |
+        aws ecr get-login-password --region $AWS_REGION| docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+        docker tag $DOCKER_IMAGE_NAME:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO_NAME:latest
+        docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO_NAME:latest
