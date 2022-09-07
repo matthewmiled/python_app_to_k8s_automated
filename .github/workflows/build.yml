@@ -51,4 +51,4 @@ jobs:
     
     - run: aws-iam-authenticator version
        
-    - run: kubectl get pod
+    - run: aws eks update-kubeconfig
