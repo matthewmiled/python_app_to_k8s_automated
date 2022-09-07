@@ -12,6 +12,8 @@ This project template builds on the deployment principles described in `python_a
 
 # Configuration
 
+* Need to create a IAM role that GitHub actions can then assume, so it can 'connect' to your AWS account when it runs the AWS commands
+
 The following configuration can/should be changed for your scenario:
 
 * The cronjob details via `cronjob.yml`
