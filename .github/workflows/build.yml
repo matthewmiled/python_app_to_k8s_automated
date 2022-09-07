@@ -51,4 +51,4 @@ jobs:
     
     - run: aws-iam-authenticator version
        
-    - run: aws eks update-kubeconfig
+    - run: aws eks update-kubeconfig --name test-cluser --region us-west-2
