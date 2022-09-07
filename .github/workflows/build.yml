@@ -45,4 +45,10 @@ jobs:
       uses: tale/kubectl-action@v1
       with:
         base64-kube-config: ${{ secrets.KUBECONFIG }}
+        
+    - name: Install aws-iam-authenticator
+      uses: prepor/action-aws-iam-authenticator@master
+    
+    - run: aws-iam-authenticator version
+       
     - run: kubectl get pod
