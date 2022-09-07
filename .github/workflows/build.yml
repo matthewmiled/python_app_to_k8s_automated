@@ -7,16 +7,16 @@ on:
 
 jobs:
 
-  env:
-    DOCKER_IMAGE_NAME: docker-test
-    AWS_REGION: us-east-2
-    AWS_ACCOUNT_ID: 707768507475
-    ECR_REPO_NAME: eks-demo
-
   if-merged:
     if: github.event.pull_request.merged == true
 
     runs-on: ubuntu-latest
+
+    env:
+      DOCKER_IMAGE_NAME: docker-test
+      AWS_REGION: us-east-2
+      AWS_ACCOUNT_ID: 707768507475
+      ECR_REPO_NAME: eks-demo
 
     steps:
     - uses: actions/checkout@v3
