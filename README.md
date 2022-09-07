@@ -2,7 +2,7 @@
 
 This project template builds on the deployment principles described in `python_app_to_k8s` by automating them with GitHub actions. 
 
-# Process
+# Workflow
 
 1. Clone repo, create new local branch
 2. Make desired changes to application
@@ -10,13 +10,24 @@ This project template builds on the deployment principles described in `python_a
 4. The `test.yml` workflow will then execute via GitHub actions (the trigger is a push to any branch apart from `main`). It will install python, install the dependencies and run `pytest` via a virtual Ubuntu machine.
 5. If the tests pass, the PR can be approved and merged. A second worflow (`build.yml`) will trigger when it detects a merged PR. This workflow builds the docker image, pushes to AWS ECR, deploys to the AWS EKS Kube Cluster and sets up a cronjob. Ensure that the cluster is already set up by following the steps in  the `python_app_to_k8s` project. 
 
-# Configuration
+# User Configuration
 
-* Need to create a IAM role that GitHub actions can then assume, so it can 'connect' to your AWS account when it runs the AWS commands
+1. Firsly, create a IAM role and OpenID connect identify in AWS. Benoit Boure has a great tutorial on this:
 
-The following configuration can/should be changed for your scenario:
+https://benoitboure.com/securely-access-your-aws-resources-from-github-actions
 
-* The cronjob details via `cronjob.yml`
-* What you want your docker image to be called via line 18 of `build.yml`
-* Your AWS account number and region via lines XXXXXXXXXX of `build.yml`
-* Python version via line 21 of `test.yml` and line 1 of `Dockerfile`
+2. Create an ECR repo for your project/application in the AWS console
+
+3. Change the ENV VARS in `build.yaml` for your requirements (one of the ENV VARS is the ECR repo name)
+
+4. Also need to copy the IAM role ARN and manually paste into the section below in `build.yaml` (the ENV VARS don't work for this step for some reason):
+
+```
+- name: Configure AWS credentials
+  uses: aws-actions/configure-aws-credentials@v1
+  with:
+    role-to-assume: <YOUR_IAM_ARN> # e.g. arn:aws:iam::12345678900:role/github-actions-role
+    aws-region: <YOUR_AWS_REGION>
+```
+
+
