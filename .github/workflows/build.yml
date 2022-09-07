@@ -18,7 +18,7 @@ jobs:
 
     env:
       DOCKER_IMAGE_NAME: docker-test
-      AWS_REGION: us-east-2
+      AWS_REGION: us-west-2
       AWS_ACCOUNT_ID: 707768507475
       ECR_REPO_NAME: eks-demo
       IAM_ROLE: github-actions
@@ -29,8 +29,8 @@ jobs:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        role-to-assume: arn:aws:iam::707768507475:role/github-actions
-        aws-region: us-east-2
+        role-to-assume: arn:aws:iam::$AWS_ACCOUNT_ID:role/$IAM_ROLE
+        aws-region: $AWS_REGION
 
     - name: Build the Docker image
       run: docker build -t $DOCKER_IMAGE_NAME .
