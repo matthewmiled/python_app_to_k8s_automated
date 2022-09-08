@@ -13,3 +13,4 @@ spec:
             image: <YOUR_ACCOUNT_NUMBER>.dkr.ecr.<YOUR_REGION>.amazonaws.com/eks-demo:latest
             imagePullPolicy: IfNotPresent
           restartPolicy: OnFailure
+suspend: True
