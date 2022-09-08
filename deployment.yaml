@@ -10,7 +10,7 @@ spec:
         spec:
           containers:
           - name: test-cronjob
-            image: <YOUR_ACCOUNT_NUMBER>.dkr.ecr.<YOUR_REGION>.amazonaws.com/eks-demo:latest
+            image: 707768507475.dkr.ecr.us-west-2.amazonaws.com/eks-demo:latest
             imagePullPolicy: IfNotPresent
           restartPolicy: OnFailure
-suspend: True
+  suspend: True
