@@ -23,6 +23,6 @@ This project template builds on the deployment principles described in `python_a
 
 4. Configure `deployment.yaml` for your needs. You will need to change the `image` so it points to your account number and ECR_REPOSITORY. 
 
-5. The `deployment.yaml` is currently set to deploy a cronjob that runs every minute, but it is suspended. If you change this at all (or change the name of the file or cronjob), you may need to update the deployment commands at the bottom of the `build.yaml`. 
+5. The `deployment.yaml` is currently set to deploy a cronjob that runs every minute, but it is suspended. If you change this at all (or change the name of the file or `name` tag of the cronjob), you will need to update the deployment commands at the bottom of the `build.yaml`. 
  
 
