@@ -4,6 +4,7 @@ metadata:
   name: test-cronjob
 spec:
   schedule: "* * * * *"
+  suspend: true
   jobTemplate:
     spec:
       template:
@@ -13,4 +14,4 @@ spec:
             image: 707768507475.dkr.ecr.us-west-2.amazonaws.com/eks-demo:latest
             imagePullPolicy: IfNotPresent
           restartPolicy: OnFailure
-          suspend: true
+  
