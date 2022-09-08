@@ -1,6 +1,6 @@
 # Intro
 
-This project template builds on the deployment principles described in `python_app_to_k8s` by automating them with GitHub actions. 
+This project template builds on the deployment principles described in `python_app_to_k8s` by automating them with GitHub actions. It is assumed that you have followed the steps in that repo to create an EKS cluster. Make sure that your cluster and ECR repos are set to the same region.
 
 # Workflow
 
@@ -12,24 +12,17 @@ This project template builds on the deployment principles described in `python_a
 
 # User Configuration
 
-1. Firsly, create a IAM role and OpenID connect identify in AWS. Benoit Boure has a great tutorial on this:
+1. Create an ECR repo for your project/application in the AWS console
 
-https://benoitboure.com/securely-access-your-aws-resources-from-github-actions
+2. Save your `AWS_ACCESS_KEY`, `AWS_SECRET_ACCESS_KEY` and `AWS_REGION` as secret repo environments in the GitHub repo settings menu
 
-2. Create an ECR repo for your project/application in the AWS console
+3. Change the following for your needs in `build.yaml`:
 
-3. Change the ENV VARS in `build.yaml` for your requirements (one of the ENV VARS is the ECR repo name)
+* `ECR_REPOSITORY` - the name of your repo that you created in step 1. Each app/project should have it's own repo where images are saved
+* `EKS_CLUSTER` - the name of your cluster
 
-4. Also need to copy the IAM role ARN and manually paste into the section below in `build.yaml` (the ENV VARS don't work for this step for some reason):
+4. Configure `deployment.yaml` for your needs. You will need to change the `image` so it points to your account number and ECR_REPOSITORY. 
 
-```
-- name: Configure AWS credentials
-  uses: aws-actions/configure-aws-credentials@v1
-  with:
-    role-to-assume: <YOUR_IAM_ARN> # e.g. arn:aws:iam::12345678900:role/github-actions-role
-    aws-region: <YOUR_AWS_REGION>
-```
-5. Create a Kubernetes cluster using EKS by following the steps in `python_app_to_k8s`. A config file for this cluster should then be created on your local machine at `$HOME/.kube/config`.
-
-6. Convert this config file to BASE64 by using 'cat $HOME/.kube/config | base64' 
+5. The `deployment.yaml` is currently set to deploy a cronjob that runs every minute, but it is suspended. If you change this at all (or change the name of the file or cronjob), you may need to update the deployment commands at the bottom of the `build.yaml`. 
+ 
 
